@@ -1,38 +1,83 @@
 autoUpdate:
   enabled: false
   schedule: ""
+bootConfigURL: https://github.com/cloudbees/cloudbees-jenkins-x-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
+  clusterName: dconde-cjxd6
+  devEnvApprovers:
+  - daveconde
+  environmentGitOwner: daveconde
   environmentGitPublic: true
-  project: ""
-  azure: {}
-  provider: gke
-  zone: ""
-gitops: true
+  gitKind: github
+  gitName: github
+  gitServer: https://github.com
+  namespace: jx
+  provider: eks
+  region: us-east-1
+  registry: 296178596335.dkr.ecr.us-east-1.amazonaws.com
 environments:
-  - key: dev
-  - key: staging
-  - key: production
+- ingress:
+    domain: 3.208.69.6.nip.io
+    externalDNS: false
+    ignoreLoadBalancer: true
+    namespaceSubDomain: -jx.
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: dev
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
+gitops: true
 ingress:
-  domain: ""
+  domain: 3.208.69.6.nip.io
   externalDNS: false
+  ignoreLoadBalancer: true
+  namespaceSubDomain: -jx.
   tls:
     email: ""
     enabled: false
     production: false
 kaniko: true
+repository: nexus
 secretStorage: vault
 storage:
+  backup:
+    enabled: false
+    url: ""
   logs:
     enabled: true
-    url: ""
+    url: s3://dconde-cjxd6-logs-8b410be7-2dd7-4e27-b4ee-6830762aebcf
   reports:
     enabled: true
-    url: ""
+    url: s3://dconde-cjxd6-reports-9d2bf01a-dbf4-4b30-ae77-ea5e1dea1a37
   repository:
     enabled: true
-    url: ""
+    url: s3://dconde-cjxd6-repository-8700d4ee-cdc8-4460-8e72-eaf86b37574b
+vault:
+  aws:
+    autoCreate: true
+    iamUserName: jx-bdd-test
+  disableURLDiscovery: true
+velero:
+  schedule: ""
+  ttl: ""
 versionStream:
   ref: 2.0.1117+cjxd.6
   url: https://github.com/cloudbees/cloudbees-jenkins-x-versions.git
